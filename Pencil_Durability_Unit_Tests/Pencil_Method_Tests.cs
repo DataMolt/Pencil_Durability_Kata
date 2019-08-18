@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Pencil_Durability_Unit_Tests
 {
-    public class UnitTest1
+    public class Pencil_Methods_Tests
     {
         [Theory]
         [InlineData('a')]
@@ -109,15 +109,17 @@ namespace Pencil_Durability_Unit_Tests
             Assert.True(40000 >= num.Length);
         }
 
-        [Fact]
-        public void UserInputIsOfTypeString()
+        
+        [Theory]
+        [InlineData("This is a string")]
+        public void UserInputConvertedToStringArray(string userInput)
         {
             // act
             var sut = new Pencil();
-            var num = sut.GetUserInput();
+            var num = sut.BuildWordArray(userInput);
 
             // assert
-            Assert.True(40000 >= num.Length);
+            Assert.IsType<string[]>(num);
         }
     }
 }

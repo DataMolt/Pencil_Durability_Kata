@@ -17,6 +17,16 @@ namespace Pencil_Durability_Kata
         }
 
         // Get user input methods
+        public object GetUserInput()
+        {
+            Console.WriteLine("Enter a string to write: ");
+            return Console.ReadLine();
+        }
+
+        public object BuildWordArray(string userInput)
+        {
+            return userInput.Split(" ");
+        }
 
         // Reduce durability methods
         public int FindCharReductionRate(char charToReduceBy)
