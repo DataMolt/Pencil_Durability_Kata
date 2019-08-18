@@ -33,7 +33,14 @@ namespace Pencil_Durability_Kata
 
         public void ReducePointDurability(int reduceBy)
         {
-            PointDurability -= reduceBy;
+            if (PointDurability >= reduceBy)
+            {
+                PointDurability -= reduceBy;
+            }
+            else
+            {
+                PointDurability = 0;
+            }
         }
     }
 }
