@@ -13,17 +13,19 @@ namespace Pencil_Durability_Kata
         public Pencil()
         {
             PointDurability = 40000;
+            //PointDurability = 10;
+
             EraserDurability = 20000;
         }
 
         // Get user input methods
-        public object GetUserInput()
+        public string GetUserInput()
         {
             Console.WriteLine("Enter a string to write: ");
             return Console.ReadLine();
         }
 
-        public object BuildWordArray(string userInput)
+        public string[] BuildWordArray(string userInput)
         {
             return userInput.Split(" ");
         }
@@ -70,6 +72,40 @@ namespace Pencil_Durability_Kata
                 }
             }
             return word;
+        }
+
+        public List<string> Write()
+        {
+            var writeToPaper = new List<string>();
+            var userInput = GetUserInput();
+            var wordArray = BuildWordArray(userInput);
+            foreach (var word in wordArray)
+            {
+                var wordForWriting = BuildWordForWritingToPaper(word);
+                writeToPaper.Add(wordForWriting);
+                if (wordForWriting.Length < word.Length)
+                {
+                    break;
+                }
+            }
+            return writeToPaper;
+        }
+
+        public List<string> Write(string stringToWrite)
+        {
+            var writeToPaper = new List<string>();
+            var userInput = stringToWrite;
+            var wordArray = BuildWordArray(userInput);
+            foreach (var word in wordArray)
+            {
+                var wordForWriting = BuildWordForWritingToPaper(word);
+                writeToPaper.Add(wordForWriting);
+                if (wordForWriting.Length < word.Length)
+                {
+                    break;
+                }
+            }
+            return writeToPaper;
         }
     }
 }

@@ -1,5 +1,6 @@
 using Pencil_Durability_Kata;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Pencil_Durability_Unit_Tests
@@ -120,6 +121,18 @@ namespace Pencil_Durability_Unit_Tests
 
             // assert
             Assert.IsType<string[]>(num);
+        }
+
+        [Theory]
+        [InlineData("This is a string")]
+        public void StringsValidatedAndInStringList(string stringToWrite)
+        {
+            // act
+            var sut = new Pencil();
+            var num = sut.Write(stringToWrite);
+
+            // assert
+            Assert.IsType<List<string>>(num);
         }
     }
 }
