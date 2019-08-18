@@ -44,5 +44,10 @@ namespace Pencil_Durability_Kata
                 return true;
             }
         }
+
+        public string BuildWordForWritingToPaper(string word)
+        {
+            return "test";
+        }
     }
 }

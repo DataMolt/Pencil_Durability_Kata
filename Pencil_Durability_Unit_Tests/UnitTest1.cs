@@ -88,7 +88,26 @@ namespace Pencil_Durability_Unit_Tests
             var num = sut.ReducePointDurability(reduceBy);
 
             // assert
-            Assert.False(num);
+            Assert.True(num);
+        }
+
+        [Theory]
+        [InlineData(4)]
+        [InlineData(40)]
+        [InlineData(400)]
+        [InlineData(4000)]
+        [InlineData(40000)]
+        [InlineData(40001)]
+
+        public void WordLengthShouldNotExceedDurability(int wordLength)
+        {
+            // act
+            var sut = new Pencil();
+            var word = new string('a', wordLength);
+            var num = sut.BuildWordForWritingToPaper(word);
+
+            // assert
+            Assert.True(sut.PointDurability >= num.Length);
         }
     }
 }
