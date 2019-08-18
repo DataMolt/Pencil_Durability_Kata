@@ -64,5 +64,22 @@ namespace Pencil_Durability_Unit_Tests
             // assert
             Assert.Equal(40000, num);
         }
+
+        [Theory]
+        [InlineData(4)]
+        [InlineData(40)]
+        [InlineData(400)]
+        [InlineData(4000)]
+        [InlineData(40000)]
+        public void CorrectDurrabilityReduction(int wordLength)
+        {
+            // act
+            var sut = new Pencil();
+            var word = new string('a', wordLength);
+            var num = sut.FindWordLength(word);
+
+            // assert
+            Assert.Equal(40000-num, sut.PointDurability);
+        }
     }
 }
