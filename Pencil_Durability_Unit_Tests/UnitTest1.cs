@@ -108,5 +108,16 @@ namespace Pencil_Durability_Unit_Tests
             // assert
             Assert.True(40000 >= num.Length);
         }
+
+        [Fact]
+        public void UserInputIsOfTypeString()
+        {
+            // act
+            var sut = new Pencil();
+            var num = sut.GetUserInput();
+
+            // assert
+            Assert.True(40000 >= num.Length);
+        }
     }
 }

@@ -16,7 +16,9 @@ namespace Pencil_Durability_Kata
             EraserDurability = 20000;
         }
 
-        // reduce durability methods
+        // Get user input methods
+
+        // Reduce durability methods
         public int FindCharReductionRate(char charToReduceBy)
         {
             int reduceDurabilityBy = 0;
@@ -45,6 +47,7 @@ namespace Pencil_Durability_Kata
             }
         }
 
+        // Writing to paper methods
         public string BuildWordForWritingToPaper(string word)
         {
             for (int letterIndex = 0; letterIndex < word.Length; letterIndex++)
