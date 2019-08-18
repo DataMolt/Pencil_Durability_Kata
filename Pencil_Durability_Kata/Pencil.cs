@@ -16,6 +16,7 @@ namespace Pencil_Durability_Kata
             EraserDurability = 20000;
         }
 
+        // reduce durability methods
         public int FindCharReductionRate(char charToReduceBy)
         {
             int reduceDurabilityBy = 0;
@@ -28,6 +29,11 @@ namespace Pencil_Durability_Kata
                 reduceDurabilityBy += 1;
             }
             return reduceDurabilityBy;
+        }
+
+        public void ReducePointDurability(int reduceBy)
+        {
+            PointDurability -= reduceBy;
         }
     }
 }

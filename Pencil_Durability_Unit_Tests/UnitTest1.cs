@@ -34,5 +34,21 @@ namespace Pencil_Durability_Unit_Tests
             // assert
             Assert.Equal(2, num);
         }
+
+        [Theory]
+        [InlineData(4)]
+        [InlineData(40)]
+        [InlineData(400)]
+        [InlineData(4000)]
+        [InlineData(40000)]
+        public void ReduceDurabilityByWeightOfCharacter(int reduceBy)
+        {
+            // act
+            var sut = new Pencil();
+            sut.ReducePointDurability(reduceBy);
+
+            // assert
+            Assert.Equal(40000-reduceBy, sut.PointDurability);
+        }
     }
 }
