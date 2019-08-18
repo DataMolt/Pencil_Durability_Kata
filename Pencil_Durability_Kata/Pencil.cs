@@ -15,5 +15,19 @@ namespace Pencil_Durability_Kata
             PointDurability = 40000;
             EraserDurability = 20000;
         }
+
+        public int FindCharReductionRate(char charToReduceBy)
+        {
+            int reduceDurabilityBy = 0;
+            if (char.IsUpper(charToReduceBy))
+            {
+                reduceDurabilityBy += 2;
+            }
+            else
+            {
+                reduceDurabilityBy += 1;
+            }
+            return reduceDurabilityBy;
+        }
     }
 }

@@ -21,5 +21,18 @@ namespace Pencil_Durability_Unit_Tests
             // assert
             Assert.Equal(1, num);
         }
+
+        [Theory]
+        [InlineData('A')]
+        [InlineData('B')]
+        public void CapitalLettersReturnReductionRateOfTwo(char letter)
+        {
+            // act
+            var sut = new Pencil();
+            var num = sut.FindCharReductionRate(letter);
+
+            // assert
+            Assert.Equal(2, num);
+        }
     }
 }
