@@ -52,6 +52,22 @@ namespace Pencil_Durability_Unit_Tests
         }
 
         [Theory]
+        [InlineData(4)]
+        [InlineData(40)]
+        [InlineData(400)]
+        [InlineData(4000)]
+        [InlineData(40000)]
+        public void ReturnFalseIfReducebySmallerThanDurability(int reduceBy)
+        {
+            // act
+            var sut = new Pencil();
+            var num = sut.ReducePointDurability(reduceBy);
+
+            // assert
+            Assert.False(num);
+        }
+
+        [Theory]
         [InlineData(40001)]
         public void IfCharacterWeightExceedsDurabilityReduceToZero(int reduceBy)
         {
@@ -61,6 +77,18 @@ namespace Pencil_Durability_Unit_Tests
 
             // assert
             Assert.Equal(0, sut.PointDurability);
+        }
+
+        [Theory]
+        [InlineData(40001)]
+        public void ReturnTrueIfReducebyExceedsPointDurability(int reduceBy)
+        {
+            // act
+            var sut = new Pencil();
+            var num = sut.ReducePointDurability(reduceBy);
+
+            // assert
+            Assert.False(num);
         }
     }
 }
