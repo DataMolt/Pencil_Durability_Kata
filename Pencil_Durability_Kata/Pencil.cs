@@ -47,7 +47,16 @@ namespace Pencil_Durability_Kata
 
         public string BuildWordForWritingToPaper(string word)
         {
-            return "test";
+            for (int letterIndex = 0; letterIndex < word.Length; letterIndex++)
+            {
+                var reductionRate = FindCharReductionRate(word[letterIndex]);
+                var exceedsPointDurability = ReducePointDurability(reductionRate);
+                if (exceedsPointDurability)
+                {
+                    return word.Substring(0, letterIndex);
+                }
+            }
+            return word;
         }
     }
 }

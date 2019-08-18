@@ -98,7 +98,6 @@ namespace Pencil_Durability_Unit_Tests
         [InlineData(4000)]
         [InlineData(40000)]
         [InlineData(40001)]
-
         public void WordLengthShouldNotExceedDurability(int wordLength)
         {
             // act
@@ -107,7 +106,7 @@ namespace Pencil_Durability_Unit_Tests
             var num = sut.BuildWordForWritingToPaper(word);
 
             // assert
-            Assert.True(sut.PointDurability >= num.Length);
+            Assert.True(40000 >= num.Length);
         }
     }
 }
