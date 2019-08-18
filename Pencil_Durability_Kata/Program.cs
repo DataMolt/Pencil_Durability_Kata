@@ -6,7 +6,16 @@ namespace Pencil_Durability_Kata
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var pencil = new Pencil();
+            var paper = new Paper();
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine(string.Join(" ", paper.Text));
+                var writeThis = pencil.Write();
+                paper.Text.AddRange(writeThis);
+            }
         }
     }
 }
