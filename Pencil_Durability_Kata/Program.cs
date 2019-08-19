@@ -6,12 +6,8 @@ namespace Pencil_Durability_Kata
     {
         static void Main(string[] args)
         {
-            var pencil = new Pencil();
-            while (true)
-            {
-                pencil.Write();
-                Console.WriteLine(pencil.PointDurability);
-            }
+            var runApplication = new RunApplication();
+            runApplication.RunApp();
         }
     }
 }

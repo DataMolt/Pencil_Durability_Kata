@@ -9,6 +9,8 @@ namespace Run_Application_Unit_Tests
     {
         [Theory]
         [InlineData(1)]
+        [InlineData(10)]
+        [InlineData(100)]
         public void AllTextAppendedToPaper(int listLength)
         {
             // act
