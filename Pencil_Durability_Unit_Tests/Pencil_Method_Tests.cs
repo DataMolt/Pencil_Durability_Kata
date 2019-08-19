@@ -157,5 +157,16 @@ namespace Pencil_Unit_Tests
             // assert
             Assert.Equal(initialPencilSize - 1, sut.PencilSize);
         }
+
+        [Fact]
+        public void PencilDurabilyResetsTo40000()
+        {
+            // act
+            var sut = new Pencil();
+            sut.SharpenPencil();
+
+            // assert
+            Assert.Equal(40000, sut.PointDurability);
+        }
     }
 }

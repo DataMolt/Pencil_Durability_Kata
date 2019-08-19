@@ -118,7 +118,7 @@ namespace Pencil_Durability_Kata
         // Sharpen methods
         public void ReducePencilLength()
         {
-            throw new NotImplementedException();
+            PencilSize -= 1;
         }
     }
 }
