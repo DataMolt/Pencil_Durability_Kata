@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Pencil_Durability_Unit_Tests
+namespace Pencil_Unit_Tests
 {
     public class Pencil_Methods_Tests
     {

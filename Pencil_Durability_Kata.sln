@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pencil_Durability_Kata", "Pencil_Durability_Kata\Pencil_Durability_Kata.csproj", "{170DFB71-E9EA-4129-A341-CA43F86CCC35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pencil_Durability_Unit_Tests", "Pencil_Durability_Unit_Tests\Pencil_Durability_Unit_Tests.csproj", "{4F45C933-4E88-4A5A-9C3B-F3BF5187EEBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pencil_Unit_Tests", "Pencil_Durability_Unit_Tests\Pencil_Unit_Tests.csproj", "{4F45C933-4E88-4A5A-9C3B-F3BF5187EEBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Run_Application_Unit_Tests", "Run_Application_Unit_Tests\Run_Application_Unit_Tests.csproj", "{B18F6712-7235-48B5-B30B-C464372ECE7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4F45C933-4E88-4A5A-9C3B-F3BF5187EEBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F45C933-4E88-4A5A-9C3B-F3BF5187EEBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F45C933-4E88-4A5A-9C3B-F3BF5187EEBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B18F6712-7235-48B5-B30B-C464372ECE7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B18F6712-7235-48B5-B30B-C464372ECE7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B18F6712-7235-48B5-B30B-C464372ECE7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B18F6712-7235-48B5-B30B-C464372ECE7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
