@@ -9,13 +9,18 @@ namespace Pencil_Durability_Kata
     {
         public int PointDurability { get; set; }
         public int EraserDurability { get; set; }
+        public int PencilSize { get; set; }
 
+        // Create pencil methods
         public Pencil()
         {
             PointDurability = 40000;
-            //PointDurability = 10;
-
             EraserDurability = 20000;
+        }
+
+        public int GeneratePencilLength()
+        {
+            throw new NotImplementedException();
         }
 
         // Get user input methods

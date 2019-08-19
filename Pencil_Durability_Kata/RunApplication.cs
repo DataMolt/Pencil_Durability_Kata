@@ -9,6 +9,7 @@ namespace Pencil_Durability_Kata
         public Pencil Pencil { get; set; }
         public Paper Paper { get; set; }
 
+
         public RunApplication()
         {
             Pencil = new Pencil();

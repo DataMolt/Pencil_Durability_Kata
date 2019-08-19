@@ -134,5 +134,16 @@ namespace Pencil_Unit_Tests
             // assert
             Assert.IsType<List<string>>(num);
         }
+
+        [Fact]
+        public void RandomizerReturnsNumberBetweenOneAndThree()
+        {
+            // act
+            var sut = new Pencil();
+            var num = sut.GeneratePencilLength();
+
+            // assert
+            Assert.True((num >= 1) && (num <= 3));
+        }
     }
 }
