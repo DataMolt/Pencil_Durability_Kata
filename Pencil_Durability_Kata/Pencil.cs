@@ -16,11 +16,13 @@ namespace Pencil_Durability_Kata
         {
             PointDurability = 40000;
             EraserDurability = 20000;
+            PencilSize = GeneratePencilLength();
         }
 
         public int GeneratePencilLength()
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            return random.Next(1, 4);
         }
 
         // Get user input methods
