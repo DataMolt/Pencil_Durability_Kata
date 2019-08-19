@@ -114,5 +114,11 @@ namespace Pencil_Durability_Kata
             }
             return writeToPaper;
         }
+
+        // Sharpen methods
+        public void ReducePencilLength()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

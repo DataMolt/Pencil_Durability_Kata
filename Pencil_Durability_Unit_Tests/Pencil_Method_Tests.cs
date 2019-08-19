@@ -145,5 +145,17 @@ namespace Pencil_Unit_Tests
             // assert
             Assert.True((num >= 1) && (num <= 3));
         }
+
+        [Fact]
+        public void PencilLengthReducedByOne()
+        {
+            // act
+            var sut = new Pencil();
+            var initialPencilSize = sut.PencilSize;
+            sut.ReducePencilLength();
+
+            // assert
+            Assert.Equal(initialPencilSize - 1, sut.PencilSize);
+        }
     }
 }
