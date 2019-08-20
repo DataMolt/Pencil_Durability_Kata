@@ -14,7 +14,9 @@ namespace Pencil_Durability_Kata
         // Create pencil methods
         public Pencil()
         {
-            PointDurability = 40000;
+            //PointDurability = 40000;
+            PointDurability = 10;
+
             EraserDurability = 20000;
             PencilSize = GeneratePencilLength();
         }
@@ -92,6 +94,11 @@ namespace Pencil_Durability_Kata
                 writeToPaper.Add(wordForWriting);
                 if (wordForWriting.Length < word.Length)
                 {
+                    if (PencilSize > 0)
+                    {
+                        SharpenPencil();
+                    }
+
                     break;
                 }
             }
@@ -109,6 +116,10 @@ namespace Pencil_Durability_Kata
                 writeToPaper.Add(wordForWriting);
                 if (wordForWriting.Length < word.Length)
                 {
+                    if (PencilSize > 0)
+                    {
+                        SharpenPencil();
+                    }
                     break;
                 }
             }
@@ -119,6 +130,37 @@ namespace Pencil_Durability_Kata
         public void ReducePencilLength()
         {
             PencilSize -= 1;
+        }
+
+        public void ResetPencilDurability()
+        {
+            //PointDurability = 40000;
+            PointDurability = 10;
+        }
+
+        public void AlertUserPencilIsBeingSharpened()
+        {
+            Console.WriteLine("Your pencil is out of lead and needs to be sharpened. Sharpening pencil now.");
+        }
+
+        public void AlertUserPencilLengthReduced()
+        {
+            Console.WriteLine($"Your pencil's gotten smaller. You can sharpen your pencil {PencilSize} more time(s).");
+        }
+
+        public void SharpenPencil()
+        {
+            AlertUserPencilIsBeingSharpened();
+            ResetPencilDurability();
+            ReducePencilLength();
+            AlertUserPencilLengthReduced();
+            Console.ReadKey();
+        }
+
+        // Create new pencil methods
+        public void AlertUserNewPencilIsBeingMade()
+        {
+            Console.WriteLine("Your pencil can no longer write! Creating a new pencil now.");
         }
     }
 }

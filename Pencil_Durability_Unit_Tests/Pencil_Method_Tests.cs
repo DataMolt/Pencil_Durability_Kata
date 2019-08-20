@@ -163,7 +163,7 @@ namespace Pencil_Unit_Tests
         {
             // act
             var sut = new Pencil();
-            sut.SharpenPencil();
+            sut.ResetPencilDurability();
 
             // assert
             Assert.Equal(40000, sut.PointDurability);
