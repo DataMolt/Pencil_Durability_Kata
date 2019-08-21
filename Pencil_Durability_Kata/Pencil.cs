@@ -83,28 +83,6 @@ namespace Pencil_Durability_Kata
             return word;
         }
 
-        public List<string> Write()
-        {
-            var writeToPaper = new List<string>();
-            var userInput = GetUserInput();
-            var wordArray = BuildWordArray(userInput);
-            foreach (var word in wordArray)
-            {
-                var wordForWriting = BuildWordForWritingToPaper(word);
-                writeToPaper.Add(wordForWriting);
-                if (wordForWriting.Length < word.Length)
-                {
-                    if (PencilSize > 0)
-                    {
-                        SharpenPencil();
-                    }
-
-                    break;
-                }
-            }
-            return writeToPaper;
-        }
-
         public List<string> Write(string stringToWrite)
         {
             var writeToPaper = new List<string>();

@@ -123,18 +123,6 @@ namespace Pencil_Unit_Tests
             Assert.IsType<string[]>(num);
         }
 
-        [Theory]
-        [InlineData("This is a string")]
-        public void StringsValidatedAndInStringList(string stringToWrite)
-        {
-            // act
-            var sut = new Pencil();
-            var num = sut.Write(stringToWrite);
-
-            // assert
-            Assert.IsType<List<string>>(num);
-        }
-
         [Fact]
         public void RandomizerReturnsNumberBetweenOneAndThree()
         {

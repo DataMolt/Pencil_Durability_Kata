@@ -22,9 +22,30 @@ namespace Pencil_Durability_Kata
             {
                 Console.Clear();
                 Console.WriteLine(string.Join(" ", Paper.Text));
-                var writeThis = Pencil.Write();
-                WriteTextToPaper(writeThis);
+                Write();
             }
+        }
+
+        public void Write()
+        {
+            var writeToPaper = new List<string>();
+            var userInput = Pencil.GetUserInput();
+            var wordArray = Pencil.BuildWordArray(userInput);
+            foreach (var word in wordArray)
+            {
+                var wordForWriting = Pencil.BuildWordForWritingToPaper(word);
+                writeToPaper.Add(wordForWriting);
+                if (wordForWriting.Length < word.Length)
+                {
+                    if (Pencil.PencilSize > 0)
+                    {
+                        Pencil.SharpenPencil();
+                    }
+
+                    break;
+                }
+            }
+            WriteTextToPaper(writeToPaper);
         }
 
         public void WriteTextToPaper(List<string> wordList)
