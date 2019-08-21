@@ -14,9 +14,7 @@ namespace Pencil_Durability_Kata
         // Create pencil methods
         public Pencil()
         {
-            //PointDurability = 40000;
-            PointDurability = 10;
-
+            PointDurability = 40000;
             EraserDurability = 20000;
             PencilSize = GeneratePencilLength();
         }
@@ -91,16 +89,7 @@ namespace Pencil_Durability_Kata
 
         public void ResetPencilDurability()
         {
-            //PointDurability = 40000;
-            PointDurability = 10;
-        }
-
-        public void SharpenPencil()
-        {
-            ResetPencilDurability();
-            ReducePencilLength();
-            AlertUserPencilLengthReduced();
-            Console.ReadKey();
+            PointDurability = 40000;
         }
 
         // Create new pencil methods

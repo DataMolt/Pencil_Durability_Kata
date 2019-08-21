@@ -39,7 +39,7 @@ namespace Pencil_Durability_Kata
                 {
                     if (Pencil.PencilSize > 0)
                     {
-                        Pencil.SharpenPencil();
+                        SharpenPencil();
                     }
 
                     break;
@@ -51,6 +51,14 @@ namespace Pencil_Durability_Kata
         public void WriteTextToPaper(List<string> wordList)
         {
             Paper.Text.AddRange(wordList);
+        }
+
+        public void SharpenPencil()
+        {
+            Pencil.ResetPencilDurability();
+            Pencil.ReducePencilLength();
+            AlertUserPencilLengthReduced();
+            Console.ReadKey();
         }
 
         public void AlertUserPencilNeedsSharpening()
