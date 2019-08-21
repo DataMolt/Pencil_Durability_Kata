@@ -57,5 +57,10 @@ namespace Pencil_Durability_Kata
         {
             Console.WriteLine("Your pencil is out of lead and needs to be sharpened.");
         }
+
+        public void AlertUserPencilLengthReduced()
+        {
+            Console.WriteLine($"Your pencil's gotten smaller. You can sharpen your pencil {Pencil.PencilSize} more time(s).");
+        }
     }
 }
