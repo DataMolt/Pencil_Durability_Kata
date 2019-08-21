@@ -95,11 +95,6 @@ namespace Pencil_Durability_Kata
             PointDurability = 10;
         }
 
-        public void AlertUserPencilIsBeingSharpened()
-        {
-            Console.WriteLine("Your pencil is out of lead and needs to be sharpened. Sharpening pencil now.");
-        }
-
         public void AlertUserPencilLengthReduced()
         {
             Console.WriteLine($"Your pencil's gotten smaller. You can sharpen your pencil {PencilSize} more time(s).");
@@ -107,7 +102,6 @@ namespace Pencil_Durability_Kata
 
         public void SharpenPencil()
         {
-            AlertUserPencilIsBeingSharpened();
             ResetPencilDurability();
             ReducePencilLength();
             AlertUserPencilLengthReduced();

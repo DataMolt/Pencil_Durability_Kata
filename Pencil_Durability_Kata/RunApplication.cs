@@ -52,5 +52,10 @@ namespace Pencil_Durability_Kata
         {
             Paper.Text.AddRange(wordList);
         }
+
+        public void AlertUserPencilNeedsSharpening()
+        {
+            Console.WriteLine("Your pencil is out of lead and needs to be sharpened.");
+        }
     }
 }
