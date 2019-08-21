@@ -37,11 +37,6 @@ namespace Pencil_Durability_Kata
                 writeToPaper.Add(wordForWriting);
                 if (wordForWriting.Length < word.Length)
                 {
-                    if (Pencil.PencilSize > 0)
-                    {
-                        SharpenPencil();
-                    }
-
                     break;
                 }
             }
