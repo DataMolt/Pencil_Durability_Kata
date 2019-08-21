@@ -15,12 +15,10 @@ namespace Pencil_Unit_Tests
         [InlineData('!')]
         public void LowercaseLettersReturnReductionRateOfOne(char letter)
         {
-            // act
             var sut = new Pencil();
-            var num = sut.FindCharReductionRate(letter);
+            var result = sut.FindCharReductionRate(letter);
 
-            // assert
-            Assert.Equal(1, num);
+            Assert.Equal(1, result);
         }
 
         [Theory]
@@ -28,12 +26,10 @@ namespace Pencil_Unit_Tests
         [InlineData('B')]
         public void CapitalLettersReturnReductionRateOfTwo(char letter)
         {
-            // act
             var sut = new Pencil();
-            var num = sut.FindCharReductionRate(letter);
+            var result = sut.FindCharReductionRate(letter);
 
-            // assert
-            Assert.Equal(2, num);
+            Assert.Equal(2, result);
         }
 
         [Theory]
@@ -44,11 +40,10 @@ namespace Pencil_Unit_Tests
         [InlineData(40000)]
         public void ReduceDurabilityByWeightOfCharacter(int reduceBy)
         {
-            // act
             var sut = new Pencil();
+
             sut.ReducePointDurability(reduceBy);
 
-            // assert
             Assert.Equal(40000-reduceBy, sut.PointDurability);
         }
 
@@ -60,23 +55,20 @@ namespace Pencil_Unit_Tests
         [InlineData(40000)]
         public void ReturnFalseIfReducebySmallerThanDurability(int reduceBy)
         {
-            // act
             var sut = new Pencil();
-            var num = sut.ReducePointDurability(reduceBy);
+            var result = sut.ReducePointDurability(reduceBy);
 
-            // assert
-            Assert.False(num);
+            Assert.False(result);
         }
 
         [Theory]
         [InlineData(40001)]
         public void IfCharacterWeightExceedsDurabilityReduceToZero(int reduceBy)
         {
-            // act
             var sut = new Pencil();
+
             sut.ReducePointDurability(reduceBy);
 
-            // assert
             Assert.Equal(0, sut.PointDurability);
         }
 
@@ -84,12 +76,10 @@ namespace Pencil_Unit_Tests
         [InlineData(40001)]
         public void ReturnTrueIfReducebyExceedsPointDurability(int reduceBy)
         {
-            // act
             var sut = new Pencil();
-            var num = sut.ReducePointDurability(reduceBy);
+            var result = sut.ReducePointDurability(reduceBy);
 
-            // assert
-            Assert.True(num);
+            Assert.True(result);
         }
 
         [Theory]
@@ -101,59 +91,50 @@ namespace Pencil_Unit_Tests
         [InlineData(40001)]
         public void WordLengthShouldNotExceedDurability(int wordLength)
         {
-            // act
             var sut = new Pencil();
             var word = new string('a', wordLength);
-            var num = sut.BuildWordForWritingToPaper(word);
+            var result = sut.BuildWordForWritingToPaper(word);
 
-            // assert
-            Assert.True(40000 >= num.Length);
+            Assert.True(40000 >= result.Length);
         }
 
-        
         [Theory]
         [InlineData("This is a string")]
         public void UserInputConvertedToStringArray(string userInput)
         {
-            // act
             var sut = new Pencil();
-            var num = sut.BuildWordArray(userInput);
+            var result = sut.BuildWordArray(userInput);
 
-            // assert
-            Assert.IsType<string[]>(num);
+            Assert.IsType<string[]>(result);
         }
 
         [Fact]
         public void RandomizerReturnsNumberBetweenOneAndThree()
         {
-            // act
             var sut = new Pencil();
-            var num = sut.GeneratePencilLength();
+            var result = sut.GeneratePencilLength();
 
-            // assert
-            Assert.True((num >= 1) && (num <= 3));
+            Assert.True((result >= 1) && (result <= 3));
         }
 
         [Fact]
         public void PencilLengthReducedByOne()
         {
-            // act
             var sut = new Pencil();
             var initialPencilSize = sut.PencilSize;
+
             sut.ReducePencilLength();
 
-            // assert
             Assert.Equal(initialPencilSize - 1, sut.PencilSize);
         }
 
         [Fact]
         public void PencilDurabilyResetsTo40000()
         {
-            // act
             var sut = new Pencil();
+
             sut.ResetPencilDurability();
 
-            // assert
             Assert.Equal(40000, sut.PointDurability);
         }
     }
