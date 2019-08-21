@@ -13,7 +13,6 @@ namespace Run_Application_Unit_Tests
         [InlineData(100)]
         public void AllTextAppendedToPaper(int listLength)
         {
-            // act
             var sut = new RunApplication();
             var beforeWriteTextCount = sut.Paper.Text.Count;
             var wordList = new List<string>();
@@ -21,9 +20,9 @@ namespace Run_Application_Unit_Tests
             {
                 wordList.Add("word");
             }
+
             sut.WriteTextToPaper(wordList);
 
-            // assert
             Assert.Equal(sut.Paper.Text.Count, beforeWriteTextCount + listLength);
         }
     }
