@@ -22,7 +22,6 @@ namespace Run_Application_Unit_Tests
             for (int i = 0; i < listLength; i++)
             {
                 wordList.Add("word");
-
             }
 
             sut.WriteTextToPaper(wordList);

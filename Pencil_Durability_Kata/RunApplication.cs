@@ -28,8 +28,11 @@ namespace Pencil_Durability_Kata
         {
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine(string.Join(" ", _stationary.Text));
+                //Console.Clear();
+                //WritePaperContentsToConsole();
+
+                var selectedAction = RequestUserAction();
+
                 Write();
             }
         }
@@ -45,15 +48,64 @@ namespace Pencil_Durability_Kata
                 writeToPaper.Add(wordForWriting);
                 if (wordForWriting.Length < word.Length)
                 {
+                    AlertUserPencilNeedsSharpening();
                     break;
                 }
             }
             WriteTextToPaper(writeToPaper);
         }
 
+        public UserActionSelection ValidateUserActionRequest(string selectionToValidate)
+        {
+            UserActionSelection userSelection;
+            if (Enum.TryParse(selectionToValidate, true, out userSelection) && Enum.IsDefined(typeof(UserActionSelection), userSelection))
+            {
+                return userSelection;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public UserActionSelection RequestUserAction()
+        {
+            UserActionSelection userSelection;
+            while (true)
+            {
+                Console.Clear();
+                WritePaperContentsToConsole();
+                Console.WriteLine("What would you like to do? \n (1) Write to paper\n");
+                var selectionToValidate = Console.ReadLine();
+                userSelection = ValidateUserActionRequest(selectionToValidate);
+                if (userSelection != 0)
+                {
+                    return userSelection;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid number!\n");
+                    Console.ReadKey();
+                }
+            }
+        }
+
         public void WriteTextToPaper(List<string> wordList)
         {
             _stationary.Text.AddRange(wordList);
+        }
+
+        public void WritePaperContentsToConsole()
+        {
+            if (_stationary.Text.Count >= 1)
+            {
+                Console.WriteLine(string.Join(" ", _stationary.Text));
+                Console.WriteLine("\n");
+            }
+            else
+            {
+                Console.WriteLine("Your paper is currently blank! Select 'Write' to write to it!\n");
+            }
         }
 
         public void SharpenPencil()
