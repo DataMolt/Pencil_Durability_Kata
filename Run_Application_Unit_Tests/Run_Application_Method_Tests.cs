@@ -22,11 +22,27 @@ namespace Run_Application_Unit_Tests
             for (int i = 0; i < listLength; i++)
             {
                 wordList.Add("word");
+
             }
 
             sut.WriteTextToPaper(wordList);
 
             Assert.Equal(sut.GetStationaryText().Count, beforeWriteTextCount + listLength);
+        }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("write")]
+        public void OneReturnsWrite(string userInput)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.ValidateUserActionRequest(userInput);
+
+            Assert.True(result == UserActionSelection.write);
         }
     }
 }
