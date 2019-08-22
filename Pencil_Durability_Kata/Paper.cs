@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pencil_Durability_Kata
 {
-    public class Paper
+    public class Paper : IStationary
     {
         public List<string> Text { get; set; }
 

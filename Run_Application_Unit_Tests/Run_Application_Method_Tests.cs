@@ -13,8 +13,11 @@ namespace Run_Application_Unit_Tests
         [InlineData(100)]
         public void AllTextAppendedToPaper(int listLength)
         {
-            var sut = new RunApplication();
-            var beforeWriteTextCount = sut.Paper.Text.Count;
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var beforeWriteTextCount = sut.GetStationaryText().Count;
             var wordList = new List<string>();
             for (int i = 0; i < listLength; i++)
             {
@@ -23,7 +26,7 @@ namespace Run_Application_Unit_Tests
 
             sut.WriteTextToPaper(wordList);
 
-            Assert.Equal(sut.Paper.Text.Count, beforeWriteTextCount + listLength);
+            Assert.Equal(sut.GetStationaryText().Count, beforeWriteTextCount + listLength);
         }
     }
 }

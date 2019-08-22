@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pencil_Durability_Kata
 {
-    public class Pencil
+    public class Pencil : IWritingUtensil
     {
         public int PointDurability { get; set; }
         public int EraserDurability { get; set; }

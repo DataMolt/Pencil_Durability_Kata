@@ -6,14 +6,22 @@ namespace Pencil_Durability_Kata
 {
     public class RunApplication
     {
-        public Pencil Pencil { get; set; }
-        public Paper Paper { get; set; }
+        private IStationary _stationary;
 
+        private IWritingUtensil _writingUtensil;
 
-        public RunApplication()
+        private Stack<IWritingUtensil> _pencilDrawer;
+
+        public RunApplication(IStationary stationary, IWritingUtensil writingUtensil, Stack<IWritingUtensil> pencilDrawer)
         {
-            Pencil = new Pencil();
-            Paper = new Paper();
+            _stationary = stationary;
+            _writingUtensil = writingUtensil;
+            _pencilDrawer = pencilDrawer;
+        }
+
+        public List<string> GetStationaryText()
+        {
+            return _stationary.Text;
         }
 
         public void RunApp()
@@ -21,7 +29,7 @@ namespace Pencil_Durability_Kata
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine(string.Join(" ", Paper.Text));
+                Console.WriteLine(string.Join(" ", _stationary.Text));
                 Write();
             }
         }
@@ -29,11 +37,11 @@ namespace Pencil_Durability_Kata
         public void Write()
         {
             var writeToPaper = new List<string>();
-            var userInput = Pencil.GetUserInput();
-            var wordArray = Pencil.BuildWordArray(userInput);
+            var userInput = _writingUtensil.GetUserInput();
+            var wordArray = _writingUtensil.BuildWordArray(userInput);
             foreach (var word in wordArray)
             {
-                var wordForWriting = Pencil.BuildWordForWritingToPaper(word);
+                var wordForWriting = _writingUtensil.BuildWordForWritingToPaper(word);
                 writeToPaper.Add(wordForWriting);
                 if (wordForWriting.Length < word.Length)
                 {
@@ -45,13 +53,13 @@ namespace Pencil_Durability_Kata
 
         public void WriteTextToPaper(List<string> wordList)
         {
-            Paper.Text.AddRange(wordList);
+            _stationary.Text.AddRange(wordList);
         }
 
         public void SharpenPencil()
         {
-            Pencil.ResetPencilDurability();
-            Pencil.ReducePencilLength();
+            _writingUtensil.ResetPencilDurability();
+            _writingUtensil.ReducePencilLength();
             AlertUserPencilLengthReduced();
             Console.ReadKey();
         }
@@ -63,7 +71,7 @@ namespace Pencil_Durability_Kata
 
         public void AlertUserPencilLengthReduced()
         {
-            Console.WriteLine($"Your pencil's gotten smaller. You can sharpen your pencil {Pencil.PencilSize} more time(s).");
+            Console.WriteLine($"Your pencil's gotten smaller. You can sharpen your pencil {_writingUtensil.PencilSize} more time(s).");
         }
     }
 }

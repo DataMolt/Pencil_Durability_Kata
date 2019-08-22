@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Pencil_Durability_Kata
 {
@@ -6,7 +7,10 @@ namespace Pencil_Durability_Kata
     {
         static void Main(string[] args)
         {
-            var runApplication = new RunApplication();
+            var paper = new Paper();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var pencil = new Pencil();
+            var runApplication = new RunApplication(paper, pencil, pencilDrawer);
             runApplication.RunApp();
         }
     }
