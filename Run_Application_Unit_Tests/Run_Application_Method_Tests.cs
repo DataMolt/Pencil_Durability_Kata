@@ -43,5 +43,20 @@ namespace Run_Application_Unit_Tests
 
             Assert.True(result == UserActionSelection.write);
         }
+
+        [Theory]
+        [InlineData("2")]
+        [InlineData("sharpen")]
+        public void TwoReturnsSharpen(string userInput)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.ValidateUserActionRequest(userInput);
+
+            Assert.True(result == UserActionSelection.sharpen);
+        }
     }
 }

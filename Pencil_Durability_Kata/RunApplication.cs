@@ -28,17 +28,24 @@ namespace Pencil_Durability_Kata
         {
             while (true)
             {
-                //Console.Clear();
-                //WritePaperContentsToConsole();
-
                 var selectedAction = RequestUserAction();
-
-                Write();
+                switch (selectedAction)
+                {
+                    case UserActionSelection.write:
+                        Write();
+                        break;
+                    case UserActionSelection.sharpen:
+                        SharpenPencil();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         public void Write()
         {
+            Console.Clear();
             var writeToPaper = new List<string>();
             var userInput = _writingUtensil.GetUserInput();
             var wordArray = _writingUtensil.BuildWordArray(userInput);
@@ -75,7 +82,7 @@ namespace Pencil_Durability_Kata
             {
                 Console.Clear();
                 WritePaperContentsToConsole();
-                Console.WriteLine("What would you like to do? \n (1) Write to paper\n");
+                Console.WriteLine("What would you like to do? \n (1) Write to paper \n (2) Sharpen pencil");
                 var selectionToValidate = Console.ReadLine();
                 userSelection = ValidateUserActionRequest(selectionToValidate);
                 if (userSelection != 0)
@@ -84,7 +91,7 @@ namespace Pencil_Durability_Kata
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid number!\n");
+                    Console.Write("Please enter a valid number!");
                     Console.ReadKey();
                 }
             }
@@ -104,7 +111,7 @@ namespace Pencil_Durability_Kata
             }
             else
             {
-                Console.WriteLine("Your paper is currently blank! Select 'Write' to write to it!\n");
+                Console.WriteLine("Your paper is currently blank! Select 'Write' to write to it!\n\n");
             }
         }
 
@@ -123,7 +130,7 @@ namespace Pencil_Durability_Kata
 
         public void AlertUserPencilLengthReduced()
         {
-            Console.WriteLine($"Your pencil's gotten smaller. You can sharpen your pencil {_writingUtensil.PencilSize} more time(s).");
+            Console.Write($"Your pencil's gotten smaller. You can sharpen your pencil {_writingUtensil.PencilSize} more time(s).");
         }
     }
 }
