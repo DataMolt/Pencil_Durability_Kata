@@ -144,12 +144,37 @@ namespace Pencil_Unit_Tests
         [InlineData('A')]
         [InlineData('B')]
         [InlineData('!')]
-        public void LowercaseLettersReturnEraserReductionOfOne(char letter)
+        public void CharsReturnEraserReductionOfOne(char letter)
         {
             var sut = new Pencil();
             var result = sut.FindEraserReductionRate(letter);
 
             Assert.Equal(1, result);
+        }
+
+        [Theory]
+        [InlineData(' ')]
+        public void WhitespaceReturnsEraserReductionOfZero(char letter)
+        {
+            var sut = new Pencil();
+            var result = sut.FindEraserReductionRate(letter);
+
+            Assert.Equal(0, result);
+        }
+
+        [Theory]
+        [InlineData(2)]
+        [InlineData(20)]
+        [InlineData(200)]
+        [InlineData(2000)]
+        [InlineData(20000)]
+        public void ReduceEraserDurabilityByWeightOfCharacter(int reduceBy)
+        {
+            var sut = new Pencil();
+
+            sut.ReduceEraserDurability(reduceBy);
+
+            Assert.Equal(20000 - reduceBy, sut.EraserDurability);
         }
     }
 }
