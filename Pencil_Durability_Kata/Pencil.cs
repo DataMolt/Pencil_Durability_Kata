@@ -11,7 +11,6 @@ namespace Pencil_Durability_Kata
         public int EraserDurability { get; set; }
         public int PencilSize { get; set; }
 
-        // Create pencil methods
         public Pencil()
         {
             PointDurability = 40000;
@@ -25,7 +24,6 @@ namespace Pencil_Durability_Kata
             return random.Next(1, 4);
         }
 
-        // Get user input methods
         public string GetUserInput()
         {
             Console.WriteLine("Enter a string to write: ");
@@ -37,7 +35,6 @@ namespace Pencil_Durability_Kata
             return userInput.Split(" ");
         }
 
-        // Reduce durability methods
         public int FindCharReductionRate(char charToReduceBy)
         {
             int reduceDurabilityBy = 0;
@@ -66,7 +63,6 @@ namespace Pencil_Durability_Kata
             }
         }
 
-        // Writing to paper methods
         public string BuildWordForWritingToPaper(string word)
         {
             for (int letterIndex = 0; letterIndex < word.Length; letterIndex++)
@@ -81,7 +77,6 @@ namespace Pencil_Durability_Kata
             return word;
         }
 
-        // Sharpen methods
         public void ReducePencilLength()
         {
             PencilSize -= 1;
@@ -92,7 +87,6 @@ namespace Pencil_Durability_Kata
             PointDurability = 40000;
         }
 
-        // Create new pencil methods
         public void AlertUserNewPencilIsBeingMade()
         {
             Console.WriteLine("Your pencil can no longer write! Creating a new pencil now.");

@@ -82,7 +82,7 @@ namespace Pencil_Durability_Kata
             {
                 Console.Clear();
                 WritePaperContentsToConsole();
-                Console.WriteLine("What would you like to do? \n (1) Write to paper \n (2) Sharpen pencil");
+                Console.Write("(1) Write to paper\n(2) Sharpen pencil\nPlease select a numbered action: ");
                 var selectionToValidate = Console.ReadLine();
                 userSelection = ValidateUserActionRequest(selectionToValidate);
                 if (userSelection != 0)
@@ -117,10 +117,16 @@ namespace Pencil_Durability_Kata
 
         public void SharpenPencil()
         {
-            _writingUtensil.ResetPencilDurability();
-            _writingUtensil.ReducePencilLength();
-            AlertUserPencilLengthReduced();
-            Console.ReadKey();
+            if (_writingUtensil.PencilSize > 0)
+            {
+                _writingUtensil.ResetPencilDurability();
+                _writingUtensil.ReducePencilLength();
+                AlertUserPencilLengthReduced();
+            }
+            else
+            {
+                AlertUserPencilCannotBeSharpened();
+            }
         }
 
         public void AlertUserPencilNeedsSharpening()
@@ -131,6 +137,13 @@ namespace Pencil_Durability_Kata
         public void AlertUserPencilLengthReduced()
         {
             Console.Write($"Your pencil's gotten smaller. You can sharpen your pencil {_writingUtensil.PencilSize} more time(s).");
+            Console.ReadKey();
+        }
+
+        public void AlertUserPencilCannotBeSharpened()
+        {
+            Console.Write("Your pencil is too small to be sharpened!");
+            Console.ReadKey();
         }
     }
 }
