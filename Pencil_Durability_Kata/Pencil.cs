@@ -96,5 +96,19 @@ namespace Pencil_Durability_Kata
             }
             return reduceDurabilityBy;
         }
+
+        public bool ReduceEraserDurability(int reduceBy)
+        {
+            if (EraserDurability >= reduceBy)
+            {
+                EraserDurability -= reduceBy;
+                return false;
+            }
+            else
+            {
+                PointDurability = 0;
+                return true;
+            }
+        }
     }
 }
