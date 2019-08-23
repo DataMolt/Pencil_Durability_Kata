@@ -131,7 +131,8 @@ namespace Pencil_Durability_Kata
 
         public void AlertUserPencilNeedsSharpening()
         {
-            Console.WriteLine("Your pencil is out of lead and needs to be sharpened.");
+            Console.Write("Your pencil is out of lead and needs to be sharpened.");
+            Console.ReadKey();
         }
 
         public void AlertUserPencilLengthReduced()

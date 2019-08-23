@@ -86,10 +86,5 @@ namespace Pencil_Durability_Kata
         {
             PointDurability = 40000;
         }
-
-        public void AlertUserNewPencilIsBeingMade()
-        {
-            Console.WriteLine("Your pencil can no longer write! Creating a new pencil now.");
-        }
     }
 }

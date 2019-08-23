@@ -25,8 +25,5 @@ namespace Pencil_Durability_Kata
         void ReducePencilLength();
 
         void ResetPencilDurability();
-
-        void AlertUserNewPencilIsBeingMade();
-      
     }
 }

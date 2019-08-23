@@ -137,5 +137,19 @@ namespace Pencil_Unit_Tests
 
             Assert.Equal(40000, sut.PointDurability);
         }
+
+        [Theory]
+        [InlineData('a')]
+        [InlineData('b')]
+        [InlineData('A')]
+        [InlineData('B')]
+        [InlineData('!')]
+        public void LowercaseLettersReturnEraserReductionOfOne(char letter)
+        {
+            var sut = new Pencil();
+            var result = sut.FindEraserReductionRate(letter);
+
+            Assert.Equal(1, result);
+        }
     }
 }
