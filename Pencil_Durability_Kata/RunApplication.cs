@@ -37,6 +37,9 @@ namespace Pencil_Durability_Kata
                     case UserActionSelection.sharpen:
                         SharpenPencil();
                         break;
+                    case UserActionSelection.erase:
+                        Erase();
+                        break;
                     default:
                         break;
                 }
@@ -62,6 +65,78 @@ namespace Pencil_Durability_Kata
             WriteTextToPaper(writeToPaper);
         }
 
+        public void SharpenPencil()
+        {
+            if (_writingUtensil.PencilSize > 0)
+            {
+                _writingUtensil.ResetPencilDurability();
+                _writingUtensil.ReducePencilLength();
+                AlertUserPencilLengthReduced();
+            }
+            else
+            {
+                AlertUserPencilCannotBeSharpened();
+            }
+        }
+
+        public void Erase()
+        {
+            Console.Clear();
+            var userInput = GetUserEraseRequest();
+            if (UserRequestInPaperText(userInput))
+            {
+                var userInputIndex = FindEraseRequestIndexInPaperText(userInput);
+                var wordToErase = _stationary.Text[userInputIndex];
+                var eraseResults = _writingUtensil.BuildWordForErasing(wordToErase);
+                _stationary.Text[userInputIndex] = eraseResults;
+            }
+            else
+            {
+                AlertUserRequestNotFoundInText();
+            }
+        }
+
+
+        // erase methods
+        public string GetUserEraseRequest()
+        {
+            Console.WriteLine("What word would you like to erase?");
+            return Console.ReadLine();
+        }
+
+        public bool UserRequestInPaperText(string userInput)
+        {
+            return _stationary.Text.Contains(userInput);
+        }
+
+        public void AlertUserRequestNotFoundInText()
+        {
+            Console.Write("Couldn't find that word. Please try another.");
+            Console.ReadKey();
+        }
+
+        public int FindEraseRequestIndexInPaperText(string userInput)
+        {
+            int foundIndex = 0;
+            for (int textIndex = _stationary.Text.Count - 1; textIndex > -1; textIndex--)
+            {
+                if (_stationary.Text[textIndex] == userInput)
+                {
+                    foundIndex = textIndex;
+                    break;
+                }
+            }
+            return foundIndex;
+        }
+
+        // edit methods
+        public bool EditStringLargerThanEditArea(string userInput, string editArea)
+        {
+            return false;
+        }
+
+
+        // welcome page methods
         public UserActionSelection ValidateUserActionRequest(string selectionToValidate)
         {
             UserActionSelection userSelection;
@@ -74,6 +149,7 @@ namespace Pencil_Durability_Kata
                 return 0;
             }
         }
+
 
         public UserActionSelection RequestUserAction()
         {
@@ -97,6 +173,7 @@ namespace Pencil_Durability_Kata
             }
         }
 
+        // write and sharpen
         public void WriteTextToPaper(List<string> wordList)
         {
             _stationary.Text.AddRange(wordList);
@@ -112,20 +189,6 @@ namespace Pencil_Durability_Kata
             else
             {
                 Console.WriteLine("Your paper is currently blank! Select 'Write' to write to it!\n\n");
-            }
-        }
-
-        public void SharpenPencil()
-        {
-            if (_writingUtensil.PencilSize > 0)
-            {
-                _writingUtensil.ResetPencilDurability();
-                _writingUtensil.ReducePencilLength();
-                AlertUserPencilLengthReduced();
-            }
-            else
-            {
-                AlertUserPencilCannotBeSharpened();
             }
         }
 

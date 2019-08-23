@@ -87,7 +87,7 @@ namespace Pencil_Durability_Kata
             PointDurability = 40000;
         }
 
-        public object FindEraserReductionRate(char charToReduceBy)
+        public int FindEraserReductionRate(char charToReduceBy)
         {
             int reduceDurabilityBy = 0;
             if (charToReduceBy != ' ')
@@ -109,6 +109,25 @@ namespace Pencil_Durability_Kata
                 PointDurability = 0;
                 return true;
             }
+        }
+
+        public string BuildWordForErasing(string word)
+        {
+            string erasedResults = "";
+            for (int letterIndex = word.Length - 1; letterIndex > -1; letterIndex--)
+            {
+                var reductionRate = FindEraserReductionRate(word[letterIndex]);
+                var exceedsPointDurability = ReduceEraserDurability(reductionRate);
+                if (exceedsPointDurability)
+                {
+                    erasedResults = erasedResults.Insert(0, word[letterIndex].ToString());
+                }
+                else
+                {
+                    erasedResults = erasedResults.Insert(0, " ");
+                }
+            }
+            return erasedResults;
         }
     }
 }

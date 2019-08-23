@@ -25,5 +25,11 @@ namespace Pencil_Durability_Kata
         void ReducePencilLength();
 
         void ResetPencilDurability();
+
+        int FindEraserReductionRate(char charToReduceBy);
+
+        bool ReduceEraserDurability(int reduceBy);
+
+        string BuildWordForErasing(string word);
     }
 }

@@ -190,5 +190,29 @@ namespace Pencil_Unit_Tests
 
             Assert.False(result);
         }
+
+        [Theory]
+        [InlineData(2)]
+        [InlineData(20)]
+        [InlineData(200)]
+        [InlineData(2000)]
+        [InlineData(20000)]
+        [InlineData(20001)]
+        public void AmountErasedShouldNotExceedEraserDurability(int wordLength)
+        {
+            var sut = new Pencil();
+            var word = new string('a', wordLength);
+            var result = sut.BuildWordForErasing(word);
+            int whiteSpaceCount = 0;
+            foreach (var letter in result)
+            {
+                if (letter == ' ')
+                {
+                    whiteSpaceCount++;
+                }
+            }
+
+            Assert.True(20000 >= whiteSpaceCount);
+        }
     }
 }
