@@ -176,5 +176,19 @@ namespace Pencil_Unit_Tests
 
             Assert.Equal(20000 - reduceBy, sut.EraserDurability);
         }
+
+        [Theory]
+        [InlineData(2)]
+        [InlineData(20)]
+        [InlineData(200)]
+        [InlineData(2000)]
+        [InlineData(20000)]
+        public void ReturnFalseIfReducebySmallerThanEraserDurability(int reduceBy)
+        {
+            var sut = new Pencil();
+            var result = sut.ReduceEraserDurability(reduceBy);
+
+            Assert.False(result);
+        }
     }
 }
