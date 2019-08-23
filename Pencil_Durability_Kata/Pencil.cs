@@ -86,5 +86,15 @@ namespace Pencil_Durability_Kata
         {
             PointDurability = 40000;
         }
+
+        public object FindEraserReductionRate(char charToReduceBy)
+        {
+            int reduceDurabilityBy = 0;
+            if (charToReduceBy != ' ')
+            {
+                reduceDurabilityBy += 1;
+            }
+            return reduceDurabilityBy;
+        }
     }
 }
