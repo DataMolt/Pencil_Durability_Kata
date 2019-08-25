@@ -139,12 +139,11 @@ namespace Pencil_Durability_Kata
             StringBuilder buildEditArea = new StringBuilder(erasedWord);
             while (true)
             {
-                if (buildIndex == _stationary.Text.Count - 1)
+                if (erasedIndex == _stationary.Text.Count - 1)
                 {
-                    buildEditArea.Append(" " + _stationary.Text[buildIndex]);
                     break;
                 }
-                if (buildEditArea.Length < userInput.Length)
+                if (buildEditArea.Length < userInput.Length || buildIndex == _stationary.Text.Count - 1)
                 {
                     buildEditArea.Append(" " + _stationary.Text[buildIndex]);
                     _stationary.Text.RemoveAt(buildIndex);

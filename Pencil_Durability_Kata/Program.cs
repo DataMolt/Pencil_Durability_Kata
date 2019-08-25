@@ -16,7 +16,7 @@ namespace Pencil_Durability_Kata
             var pencil = new Pencil();
             var runApplication = new RunApplication(paper, pencil, pencilDrawer);
 
-            runApplication.BuildEditArea("abc", 0);
+            runApplication.BuildEditArea("abcdefg", 0);
 
             //runApplication.RunApp();
         }

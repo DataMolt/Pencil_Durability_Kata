@@ -150,14 +150,13 @@ namespace Run_Application_Unit_Tests
         {
             var paper = new Paper();
             paper.Text.Add("a");
-            paper.Text.Add("b");
             var pencil = new Pencil();
             var pencilDrawer = new Stack<IWritingUtensil>();
             var sut = new RunApplication(paper, pencil, pencilDrawer);
 
             var result = sut.BuildEditArea(userInput, 0);
 
-            Assert.Equal(3, result.Length);
+            Assert.Equal(1, result.Length);
         }
 
         [Theory]
