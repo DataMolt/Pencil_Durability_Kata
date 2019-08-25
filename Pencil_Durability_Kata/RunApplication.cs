@@ -83,9 +83,10 @@ namespace Pencil_Durability_Kata
         {
             Console.Clear();
             var userInput = GetUserEraseRequest();
+            int userInputIndex;
             if (UserRequestInPaperText(userInput))
             {
-                var userInputIndex = FindEraseRequestIndexInPaperText(userInput);
+                userInputIndex = FindEraseRequestIndexInPaperText(userInput);
                 var wordToErase = _stationary.Text[userInputIndex];
                 var eraseResults = _writingUtensil.BuildWordForErasing(wordToErase);
                 _stationary.Text[userInputIndex] = eraseResults;
@@ -129,10 +130,31 @@ namespace Pencil_Durability_Kata
             return foundIndex;
         }
 
+
         // edit methods
-        public bool EditStringLargerThanEditArea(string userInput, string editArea)
+        public string BuildEditArea(string userInput, int erasedIndex)
         {
-            return false;
+            string erasedWord = _stationary.Text[erasedIndex];
+            int buildIndex = erasedIndex;
+            StringBuilder buildEditArea = new StringBuilder(erasedWord);
+            while (true)
+            {
+                if (buildIndex == _stationary.Text.Count - 1)
+                {
+                    buildEditArea.Append(" " + _stationary.Text[buildIndex]);
+                    break;
+                }
+                if (buildEditArea.Length < userInput.Length)
+                {
+                    buildIndex++;
+                    buildEditArea.Append(" " + _stationary.Text[buildIndex]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return buildEditArea.ToString();
         }
 
 
@@ -149,7 +171,6 @@ namespace Pencil_Durability_Kata
                 return 0;
             }
         }
-
 
         public UserActionSelection RequestUserAction()
         {

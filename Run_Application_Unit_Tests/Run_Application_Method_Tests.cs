@@ -125,19 +125,21 @@ namespace Run_Application_Unit_Tests
         }
 
         [Theory]
-        [InlineData("haha")]
-        [InlineData("Adam")]
-        public void ReturnTrueIfEditStringLargerThanEditArea(string userInput)
+        [InlineData("123")]
+        [InlineData("abc")]
+        public void EditAreaLongerOrEqualToUserInput(string userInput)
         {
             var paper = new Paper();
+            paper.Text.Add("a");
+            paper.Text.Add("b");
+            paper.Text.Add("c");
             var pencil = new Pencil();
             var pencilDrawer = new Stack<IWritingUtensil>();
             var sut = new RunApplication(paper, pencil, pencilDrawer);
-            var editArea = "hi";
 
-            var result = sut.EditStringLargerThanEditArea(userInput, editArea);
+            var result = sut.BuildEditArea(userInput, 0);
 
-            Assert.False(result);
+            Assert.Equal(userInput.Length, result.Length);
         }
     }
 }
