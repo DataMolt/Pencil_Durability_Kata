@@ -141,5 +141,53 @@ namespace Run_Application_Unit_Tests
 
             Assert.Equal(userInput.Length, result.Length);
         }
+
+        [Theory]
+        [InlineData("123")]
+        [InlineData("abc")]
+        public void IfLastIndexReachedFinishBuildingEditString(string userInput)
+        {
+            var paper = new Paper();
+            paper.Text.Add("a");
+            paper.Text.Add("b");
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.BuildEditArea(userInput, 0);
+
+            Assert.Equal(5, result.Length);
+        }
+
+        [Theory]
+        [InlineData("Y")]
+        [InlineData("y")]
+        public void YReturnsTrue(string userInput)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.AskUserToEditText(userInput);
+
+            Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData("N")]
+        [InlineData("n")]
+        [InlineData("abcd")]
+        public void ANythingButYReturnsFalse(string userInput)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.AskUserToEditText(userInput);
+
+            Assert.False(result);
+        }
     }
 }

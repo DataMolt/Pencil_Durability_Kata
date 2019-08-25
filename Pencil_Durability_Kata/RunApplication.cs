@@ -157,6 +157,35 @@ namespace Pencil_Durability_Kata
             return buildEditArea.ToString();
         }
 
+        public bool AskUserToEditText()
+        {
+            Console.WriteLine("Would you like to edit your erased text?");
+            Console.Write("Enter 'Y' to edit. Enter any other key to return: ");
+            var userInput = Console.ReadLine();
+            if (userInput.ToLower() == "y")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool AskUserToEditText(string userInput)
+        {
+            Console.WriteLine("Would you like to edit your erased text?");
+            Console.Write("Enter 'Y' to edit. Enter any other key to return: ");
+            if (userInput.ToLower() == "y")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         // welcome page methods
         public UserActionSelection ValidateUserActionRequest(string selectionToValidate)
@@ -193,6 +222,7 @@ namespace Pencil_Durability_Kata
                 }
             }
         }
+
 
         // write and sharpen
         public void WriteTextToPaper(List<string> wordList)
