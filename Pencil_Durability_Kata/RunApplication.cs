@@ -135,7 +135,7 @@ namespace Pencil_Durability_Kata
         public string BuildEditArea(string userInput, int erasedIndex)
         {
             string erasedWord = _stationary.Text[erasedIndex];
-            int buildIndex = erasedIndex;
+            int buildIndex = erasedIndex + 1;
             StringBuilder buildEditArea = new StringBuilder(erasedWord);
             while (true)
             {
@@ -146,8 +146,8 @@ namespace Pencil_Durability_Kata
                 }
                 if (buildEditArea.Length < userInput.Length)
                 {
-                    buildIndex++;
                     buildEditArea.Append(" " + _stationary.Text[buildIndex]);
+                    _stationary.Text.RemoveAt(buildIndex);
                 }
                 else
                 {

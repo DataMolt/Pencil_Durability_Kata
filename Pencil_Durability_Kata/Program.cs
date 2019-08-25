@@ -9,8 +9,9 @@ namespace Pencil_Durability_Kata
         {
             var paper = new Paper();
             paper.Text.Add("a");
-            paper.Text.Add("a");
-            paper.Text.Add("a");
+            paper.Text.Add("b");
+            paper.Text.Add("c");
+            paper.Text.Add("d");
             var pencilDrawer = new Stack<IWritingUtensil>();
             var pencil = new Pencil();
             var runApplication = new RunApplication(paper, pencil, pencilDrawer);

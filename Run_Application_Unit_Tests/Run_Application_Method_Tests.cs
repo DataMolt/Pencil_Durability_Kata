@@ -133,6 +133,7 @@ namespace Run_Application_Unit_Tests
             paper.Text.Add("a");
             paper.Text.Add("b");
             paper.Text.Add("c");
+            paper.Text.Add("d");
             var pencil = new Pencil();
             var pencilDrawer = new Stack<IWritingUtensil>();
             var sut = new RunApplication(paper, pencil, pencilDrawer);
@@ -156,7 +157,7 @@ namespace Run_Application_Unit_Tests
 
             var result = sut.BuildEditArea(userInput, 0);
 
-            Assert.Equal(5, result.Length);
+            Assert.Equal(3, result.Length);
         }
 
         [Theory]
@@ -178,7 +179,7 @@ namespace Run_Application_Unit_Tests
         [InlineData("N")]
         [InlineData("n")]
         [InlineData("abcd")]
-        public void ANythingButYReturnsFalse(string userInput)
+        public void AnythingButYReturnsFalse(string userInput)
         {
             var paper = new Paper();
             var pencil = new Pencil();
