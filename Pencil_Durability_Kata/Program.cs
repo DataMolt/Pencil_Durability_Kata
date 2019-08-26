@@ -8,7 +8,7 @@ namespace Pencil_Durability_Kata
         static void Main(string[] args)
         {
             var paper = new Paper();
-            paper.Text.Add("a");
+            paper.Text.Add("abcdefg");
             paper.Text.Add("b");
             paper.Text.Add("c");
             paper.Text.Add("d");
@@ -16,7 +16,6 @@ namespace Pencil_Durability_Kata
             var pencil = new Pencil();
             var runApplication = new RunApplication(paper, pencil, pencilDrawer);
 
-            runApplication.BuildEditArea("abcdefg", 0);
 
             //runApplication.RunApp();
         }

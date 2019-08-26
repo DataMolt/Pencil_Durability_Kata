@@ -125,41 +125,6 @@ namespace Run_Application_Unit_Tests
         }
 
         [Theory]
-        [InlineData("123")]
-        [InlineData("abc")]
-        public void EditAreaLongerOrEqualToUserInput(string userInput)
-        {
-            var paper = new Paper();
-            paper.Text.Add("a");
-            paper.Text.Add("b");
-            paper.Text.Add("c");
-            paper.Text.Add("d");
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.BuildEditArea(userInput, 0);
-
-            Assert.Equal(userInput.Length, result.Length);
-        }
-
-        [Theory]
-        [InlineData("123")]
-        [InlineData("abc")]
-        public void IfLastIndexReachedFinishBuildingEditString(string userInput)
-        {
-            var paper = new Paper();
-            paper.Text.Add("a");
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.BuildEditArea(userInput, 0);
-
-            Assert.Equal(1, result.Length);
-        }
-
-        [Theory]
         [InlineData("Y")]
         [InlineData("y")]
         public void YReturnsTrue(string userInput)
@@ -188,6 +153,39 @@ namespace Run_Application_Unit_Tests
             var result = sut.AskUserToEditText(userInput);
 
             Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData('N')]
+        [InlineData('n')]
+        [InlineData('!')]
+        [InlineData('.')]
+        public void NonWhitespaceReturnsAt(char userInput)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var charToEdit = 'A';
+
+            var result = sut.CreateCharForEditString(userInput, charToEdit);
+
+            Assert.True(result == '@');
+        }
+
+        [Theory]
+        [InlineData('N')]
+        public void WhitespaceReturnsEditChar(char userInput)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var charToEdit = ' ';
+
+            var result = sut.CreateCharForEditString(userInput, charToEdit);
+
+            Assert.True(result == userInput);
         }
     }
 }
