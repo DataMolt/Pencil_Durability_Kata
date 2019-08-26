@@ -8,6 +8,7 @@ namespace Pencil_Durability_Kata
     {
         write = 1,
         sharpen = 2,
-        erase = 3
+        erase = 3,
+        newPencil = 4
     }
 }

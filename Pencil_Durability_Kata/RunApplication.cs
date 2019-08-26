@@ -12,16 +12,21 @@ namespace Pencil_Durability_Kata
 
         private Stack<IWritingUtensil> _pencilDrawer;
 
-        public RunApplication(IStationary stationary, IWritingUtensil writingUtensil, Stack<IWritingUtensil> pencilDrawer)
+        private IEraseHelper _eraseHelper;
+
+        private IEditHelper _editHelper;
+
+        private IWriteAndSharpenHelper _writeAndSharpenHelper;
+
+        public RunApplication(IStationary stationary, IWritingUtensil writingUtensil, Stack<IWritingUtensil> pencilDrawer, IEraseHelper eraseHelper,
+            IEditHelper editHelper, IWriteAndSharpenHelper writeAndSharpenHelper)
         {
             _stationary = stationary;
             _writingUtensil = writingUtensil;
             _pencilDrawer = pencilDrawer;
-        }
-
-        public List<string> GetStationaryText()
-        {
-            return _stationary.Text;
+            _eraseHelper = eraseHelper;
+            _editHelper = editHelper;
+            _writeAndSharpenHelper = writeAndSharpenHelper;
         }
 
         public void RunApp()
@@ -39,6 +44,9 @@ namespace Pencil_Durability_Kata
                         break;
                     case UserActionSelection.erase:
                         Erase();
+                        break;
+                    case UserActionSelection.newPencil:
+                        BuildNewPencil();
                         break;
                     default:
                         break;
@@ -58,11 +66,11 @@ namespace Pencil_Durability_Kata
                 writeToPaper.Add(wordForWriting);
                 if (wordForWriting.Length < word.Length)
                 {
-                    AlertUserPencilNeedsSharpening();
+                    _writeAndSharpenHelper.AlertUserPencilNeedsSharpening();
                     break;
                 }
             }
-            WriteTextToPaper(writeToPaper);
+            _writeAndSharpenHelper.WriteTextToPaper(writeToPaper);
         }
 
         public void SharpenPencil()
@@ -71,22 +79,22 @@ namespace Pencil_Durability_Kata
             {
                 _writingUtensil.ResetPencilDurability();
                 _writingUtensil.ReducePencilLength();
-                AlertUserPencilLengthReduced();
+                _writeAndSharpenHelper.AlertUserPencilLengthReduced();
             }
             else
             {
-                AlertUserPencilCannotBeSharpened();
+                _writeAndSharpenHelper.AlertUserPencilCannotBeSharpened();
             }
         }
 
         public void Erase()
         {
             Console.Clear();
-            var userInput = GetUserEraseRequest();
+            var userInput = _eraseHelper.GetUserEraseRequest();
             int userInputIndex;
-            if (UserRequestInPaperText(userInput))
+            if (_eraseHelper.UserRequestInPaperText(userInput))
             {
-                userInputIndex = FindEraseRequestIndexInPaperText(userInput);
+                userInputIndex = _eraseHelper.FindEraseRequestIndexInPaperText(userInput);
                 var wordToErase = _stationary.Text[userInputIndex];
                 var eraseResults = _writingUtensil.BuildWordForErasing(wordToErase);
                 _stationary.Text[userInputIndex] = eraseResults;
@@ -94,30 +102,30 @@ namespace Pencil_Durability_Kata
             }
             else
             {
-                AlertUserRequestNotFoundInText();
+                _eraseHelper.AlertUserRequestNotFoundInText();
             }
         }
 
         public void Edit(int eraseIndex)
         {
-            var continueToEdit = AskUserToEditText();
+            var continueToEdit = _editHelper.AskUserToEditText();
             if (continueToEdit)
             {
                 Console.WriteLine("Enter text to replace the erased area: ");
-                var editString = AskUserForEditString();
+                var editString = _editHelper.AskUserForEditString();
                 var editArea = _stationary.Text[eraseIndex];
                 StringBuilder buildEditedString = new StringBuilder();
                 for (int editStringIndex = 0; editStringIndex < editString.Length; editStringIndex++)
                 {
                     var editAreaSmallerThanEditString =
-                        CheckIfEditAreaSmallerThanEditString(editArea, editStringIndex);
+                        _editHelper.CheckIfEditAreaSmallerThanEditString(editArea, editStringIndex);
                     if (editAreaSmallerThanEditString)
                     {
-                        editArea += GetStringToAppendToEditArea(eraseIndex);
+                        editArea += _editHelper.GetStringToAppendToEditArea(eraseIndex);
                     }
 
-                    var addToEditedString = CreateCharForEditString(editString[editStringIndex], editArea[editStringIndex]);
-                    var eraserReductionRate = _writingUtensil.FindCharReductionRate(addToEditedString);
+                    char addToEditedString = _editHelper.GetCharToAppendToEditedArea(eraseIndex, editString, editStringIndex, editArea);
+                    int eraserReductionRate = _editHelper.GetPointReductionFromAddToEditedString(addToEditedString);
 
                     if (_writingUtensil.PointDurability >= eraserReductionRate)
                     {
@@ -125,129 +133,34 @@ namespace Pencil_Durability_Kata
                         _writingUtensil.ReducePointDurability(eraserReductionRate);
                     }
                 }
-                if (buildEditedString.Length < editArea.Length)
-                {
-                    for (int i = buildEditedString.Length; i < editArea.Length; i++)
-                    {
-                        buildEditedString.Append(editArea[i]);
-                    }
-                }
+
+                _editHelper.AppendRemainingOriginalCharsToEditedString(buildEditedString, editArea);
+
                 _stationary.Text[eraseIndex] = buildEditedString.ToString();
             }
         }
 
-
-        // erase methods
-        public string GetUserEraseRequest()
+        // write test for this
+        public void BuildNewPencil()
         {
-            Console.WriteLine("What word would you like to erase?");
-            return Console.ReadLine();
-        }
-
-        public bool UserRequestInPaperText(string userInput)
-        {
-            return _stationary.Text.Contains(userInput);
-        }
-
-        public void AlertUserRequestNotFoundInText()
-        {
-            Console.Write("Couldn't find that word. Please try another.");
-            Console.ReadKey();
-        }
-
-        public int FindEraseRequestIndexInPaperText(string userInput)
-        {
-            int foundIndex = 0;
-            for (int textIndex = _stationary.Text.Count - 1; textIndex > -1; textIndex--)
+            if (_pencilDrawer.Count != 0)
             {
-                if (_stationary.Text[textIndex] == userInput)
-                {
-                    foundIndex = textIndex;
-                    break;
-                }
-            }
-            return foundIndex;
-        }
-
-
-        // edit methods
-        public bool AskUserToEditText()
-        {
-            Console.Clear();
-            Console.WriteLine("Would you like to edit your erased text?");
-            Console.Write("Enter 'Y' to edit. Enter any other key to return: ");
-            var userInput = Console.ReadLine();
-            if (userInput.ToLower() == "y")
-            {
-                return true;
+                _writingUtensil = _pencilDrawer.Pop();
+                Console.WriteLine($"\nYou now have a new pencil. You have {_pencilDrawer.Count} pencil(s) left.");
+                Console.ReadKey();
             }
             else
             {
-                return false;
+                Console.WriteLine("\nYou've run out of extra pencils!");
+                Console.ReadKey();
             }
         }
 
-        public bool AskUserToEditText(string userInput)
+        public void DisplayPencilStats()
         {
-            Console.WriteLine("Would you like to edit your erased text?");
-            Console.Write("Enter 'Y' to edit. Enter any other key to return: ");
-            if (userInput.ToLower() == "y")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            Console.WriteLine($"Point Durability: {_writingUtensil.PointDurability}     Eraser Durability: {_writingUtensil.EraserDurability}\n");
         }
 
-        public string AskUserForEditString()
-        {
-            Console.Clear();
-            Console.WriteLine("Enter text to replace the erased area: ");
-            return Console.ReadLine();
-        }
-
-        public char CreateCharForEditString(char charInEditString, char charInEditArea)
-        {
-            if (charInEditArea != ' ')
-            {
-                return '@';
-            }
-            else
-            {
-                return charInEditString;
-            }
-        }
-
-        public bool CheckIfEditAreaSmallerThanEditString(string editArea, int editStringIndex)
-        {
-            if (editStringIndex > editArea.Length - 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public string GetStringToAppendToEditArea(int eraseIndex)
-        {
-            if (eraseIndex < _stationary.Text.Count - 1)
-            {
-                var stringToAppend = " " + _stationary.Text[eraseIndex + 1];
-                _stationary.Text.RemoveAt(eraseIndex + 1);
-                return stringToAppend;
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-
-        // welcome page methods
         public UserActionSelection ValidateUserActionRequest(string selectionToValidate)
         {
             UserActionSelection userSelection;
@@ -267,9 +180,10 @@ namespace Pencil_Durability_Kata
             while (true)
             {
                 Console.Clear();
-                WritePaperContentsToConsole();
+                _writeAndSharpenHelper.WritePaperContentsToConsole();
+                DisplayPencilStats();
                 Console.Write("(1) Write to paper\n(2) Sharpen pencil\n(3) Erase text from paper" +
-                    "\nPlease select a numbered action: ");
+                    "\n(4) Retrieve new pencil\nPlease select a numbered action: ");
                 var selectionToValidate = Console.ReadLine();
                 userSelection = ValidateUserActionRequest(selectionToValidate);
                 if (userSelection != 0)
@@ -282,44 +196,6 @@ namespace Pencil_Durability_Kata
                     Console.ReadKey();
                 }
             }
-        }
-
-
-        // write and sharpen
-        public void WriteTextToPaper(List<string> wordList)
-        {
-            _stationary.Text.AddRange(wordList);
-        }
-
-        public void WritePaperContentsToConsole()
-        {
-            if (_stationary.Text.Count >= 1)
-            {
-                Console.WriteLine(string.Join(" ", _stationary.Text));
-                Console.WriteLine("\n");
-            }
-            else
-            {
-                Console.WriteLine("Your paper is currently blank! Select 'Write' to write to it!\n\n");
-            }
-        }
-
-        public void AlertUserPencilNeedsSharpening()
-        {
-            Console.Write("Your pencil is out of lead and needs to be sharpened.");
-            Console.ReadKey();
-        }
-
-        public void AlertUserPencilLengthReduced()
-        {
-            Console.Write($"Your pencil's gotten smaller. You can sharpen your pencil {_writingUtensil.PencilSize} more time(s).");
-            Console.ReadKey();
-        }
-
-        public void AlertUserPencilCannotBeSharpened()
-        {
-            Console.Write("Your pencil is too small to be sharpened!");
-            Console.ReadKey();
         }
     }
 }

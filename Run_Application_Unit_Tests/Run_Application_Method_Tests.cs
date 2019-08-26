@@ -8,28 +8,6 @@ namespace Run_Application_Unit_Tests
     public class Run_Application_Method_Tests
     {
         [Theory]
-        [InlineData(1)]
-        [InlineData(10)]
-        [InlineData(100)]
-        public void AllTextAppendedToPaper(int listLength)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-            var beforeWriteTextCount = sut.GetStationaryText().Count;
-            var wordList = new List<string>();
-            for (int i = 0; i < listLength; i++)
-            {
-                wordList.Add("word");
-            }
-
-            sut.WriteTextToPaper(wordList);
-
-            Assert.Equal(sut.GetStationaryText().Count, beforeWriteTextCount + listLength);
-        }
-
-        [Theory]
         [InlineData("1")]
         [InlineData("write")]
         public void OneReturnsWrite(string userInput)
@@ -37,7 +15,10 @@ namespace Run_Application_Unit_Tests
             var paper = new Paper();
             var pencil = new Pencil();
             var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var eraseHelper = new EraseHelper(paper);
+            var editHelper = new EditHelper(paper, pencil);
+            var writeAndSharpenHelper = new WriteAndSharpenHelper(paper, pencil);
+            var sut = new RunApplication(paper, pencil, pencilDrawer, eraseHelper, editHelper, writeAndSharpenHelper);
 
             var result = sut.ValidateUserActionRequest(userInput);
 
@@ -52,7 +33,10 @@ namespace Run_Application_Unit_Tests
             var paper = new Paper();
             var pencil = new Pencil();
             var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var eraseHelper = new EraseHelper(paper);
+            var editHelper = new EditHelper(paper, pencil);
+            var writeAndSharpenHelper = new WriteAndSharpenHelper(paper, pencil);
+            var sut = new RunApplication(paper, pencil, pencilDrawer, eraseHelper, editHelper, writeAndSharpenHelper);
 
             var result = sut.ValidateUserActionRequest(userInput);
 
@@ -67,7 +51,10 @@ namespace Run_Application_Unit_Tests
             var paper = new Paper();
             var pencil = new Pencil();
             var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var eraseHelper = new EraseHelper(paper);
+            var editHelper = new EditHelper(paper, pencil);
+            var writeAndSharpenHelper = new WriteAndSharpenHelper(paper, pencil);
+            var sut = new RunApplication(paper, pencil, pencilDrawer, eraseHelper, editHelper, writeAndSharpenHelper);
 
             var result = sut.ValidateUserActionRequest(userInput);
 
@@ -75,190 +62,21 @@ namespace Run_Application_Unit_Tests
         }
 
         [Theory]
-        [InlineData("haha")]
-        [InlineData("Adam")]
-        public void ReturnsIndexOfLastOccurrenceOfUserInput(string userInput)
+        [InlineData("4")]
+        [InlineData("newPencil")]
+        public void FourReturnsNewPencil(string userInput)
         {
             var paper = new Paper();
             var pencil = new Pencil();
             var pencilDrawer = new Stack<IWritingUtensil>();
-            paper.Text.Add(userInput);
-            paper.Text.Add("test");
-            paper.Text.Add(userInput);
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var eraseHelper = new EraseHelper(paper);
+            var editHelper = new EditHelper(paper, pencil);
+            var writeAndSharpenHelper = new WriteAndSharpenHelper(paper, pencil);
+            var sut = new RunApplication(paper, pencil, pencilDrawer, eraseHelper, editHelper, writeAndSharpenHelper);
 
-            var result = sut.FindEraseRequestIndexInPaperText(userInput);
+            var result = sut.ValidateUserActionRequest(userInput);
 
-            Assert.Equal(2, result);
-        }
-
-        [Theory]
-        [InlineData("haha")]
-        [InlineData("Adam")]
-        public void UserRequestFoundInPaperText(string userInput)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            paper.Text.Add(userInput);
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.UserRequestInPaperText(userInput);
-
-            Assert.True(result);
-        }
-
-        [Theory]
-        [InlineData("haha")]
-        [InlineData("Adam")]
-        public void UserRequestNotFoundInPaperText(string userInput)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            paper.Text.Add(userInput);
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.UserRequestInPaperText("test");
-
-            Assert.False(result);
-        }
-
-        [Theory]
-        [InlineData("Y")]
-        [InlineData("y")]
-        public void YReturnsTrue(string userInput)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.AskUserToEditText(userInput);
-
-            Assert.True(result);
-        }
-
-        [Theory]
-        [InlineData("N")]
-        [InlineData("n")]
-        [InlineData("abcd")]
-        public void AnythingButYReturnsFalse(string userInput)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.AskUserToEditText(userInput);
-
-            Assert.False(result);
-        }
-
-        [Theory]
-        [InlineData('N')]
-        [InlineData('n')]
-        [InlineData('!')]
-        [InlineData('.')]
-        public void NonWhitespaceReturnsAt(char userInput)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-            var charToEdit = 'A';
-
-            var result = sut.CreateCharForEditString(userInput, charToEdit);
-
-            Assert.True(result == '@');
-        }
-
-        [Theory]
-        [InlineData('N')]
-        public void WhitespaceReturnsEditChar(char userInput)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-            var charToEdit = ' ';
-
-            var result = sut.CreateCharForEditString(userInput, charToEdit);
-
-            Assert.True(result == userInput);
-        }
-
-        [Theory]
-        [InlineData('N')]
-        public void EditSpaceLargerThanEditString(char userInput)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-            var charToEdit = ' ';
-
-            var result = sut.CreateCharForEditString(userInput, charToEdit);
-
-            Assert.True(result == userInput);
-        }
-
-        [Theory]
-        [InlineData("Nn")]
-        public void EditAreaSmallerThanEditString(string editArea)
-        {
-            var paper = new Paper();
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.CheckIfEditAreaSmallerThanEditString(editArea, 3);
-
-            Assert.True(result);
-        }
-
-        [Theory]
-        [InlineData("Nnn")]
-        public void EditAreaLargerThanEditString(string editArea)
-        {
-            var paper = new Paper();
-            paper.Text.Add("aa");
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.CheckIfEditAreaSmallerThanEditString(editArea, 2);
-
-            Assert.False(result);
-        }
-
-        [Fact]
-        public void ReturnStringInNextIndex()
-        {
-            var paper = new Paper();
-            paper.Text.Add("aa");
-            paper.Text.Add("bb");
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.GetStringToAppendToEditArea(0);
-
-            Assert.True(result == " bb");
-        }
-
-        [Fact]
-        public void LastIndexReturnsEmptyString()
-        {
-            var paper = new Paper();
-            paper.Text.Add("aa");
-            var pencil = new Pencil();
-            var pencilDrawer = new Stack<IWritingUtensil>();
-            var sut = new RunApplication(paper, pencil, pencilDrawer);
-
-            var result = sut.GetStringToAppendToEditArea(0);
-
-            Assert.True(result == "");
+            Assert.True(result == UserActionSelection.newPencil);
         }
     }
 }
