@@ -97,14 +97,14 @@ namespace Pencil_Durability_Kata
             }
         }
 
-        public void Edit()
+        public void Edit(int eraseIndex)
         {
             var continueToEdit = AskUserToEditText();
             if (continueToEdit)
             {
                 Console.WriteLine("Enter text to replace the erased area: ");
-                var userInput = Console.ReadLine();
-
+                var userInput = AskUserForEditString();
+                var editArea = _stationary.Text[eraseIndex];
             }
         }
 
@@ -172,6 +172,13 @@ namespace Pencil_Durability_Kata
             }
         }
 
+        public string AskUserForEditString()
+        {
+            Console.Clear();
+            Console.WriteLine("Enter text to replace the erased area: ");
+            return Console.ReadLine();
+        }
+
         public char CreateCharForEditString(char charInEditString, char charInEditArea)
         {
             if (charInEditArea == ' ')
@@ -181,6 +188,18 @@ namespace Pencil_Durability_Kata
             else
             {
                 return '@';
+            }
+        }
+
+        public bool CheckIfEditAreaSmallerThanEditString(string editArea, int editStringIndex)
+        {
+            if (editStringIndex > editArea.Length - 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

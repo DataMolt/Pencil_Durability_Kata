@@ -187,5 +187,49 @@ namespace Run_Application_Unit_Tests
 
             Assert.True(result == userInput);
         }
+
+        [Theory]
+        [InlineData('N')]
+        public void EditSpaceLargerThanEditString(char userInput)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+            var charToEdit = ' ';
+
+            var result = sut.CreateCharForEditString(userInput, charToEdit);
+
+            Assert.True(result == userInput);
+        }
+
+        [Theory]
+        [InlineData("Nn")]
+        public void EditAreaSmallerThanEditString(string editArea)
+        {
+            var paper = new Paper();
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.CheckIfEditAreaSmallerThanEditString(editArea, 3);
+
+            Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData("Nnn")]
+        public void EditAreaLargerThanEditString(string editArea)
+        {
+            var paper = new Paper();
+            paper.Text.Add("aa");
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.CheckIfEditAreaSmallerThanEditString(editArea, 2);
+
+            Assert.False(result);
+        }
     }
 }
