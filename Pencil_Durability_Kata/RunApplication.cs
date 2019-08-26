@@ -90,6 +90,7 @@ namespace Pencil_Durability_Kata
                 var wordToErase = _stationary.Text[userInputIndex];
                 var eraseResults = _writingUtensil.BuildWordForErasing(wordToErase);
                 _stationary.Text[userInputIndex] = eraseResults;
+                Edit(userInputIndex);
             }
             else
             {
@@ -103,8 +104,35 @@ namespace Pencil_Durability_Kata
             if (continueToEdit)
             {
                 Console.WriteLine("Enter text to replace the erased area: ");
-                var userInput = AskUserForEditString();
+                var editString = AskUserForEditString();
                 var editArea = _stationary.Text[eraseIndex];
+                StringBuilder buildEditedString = new StringBuilder();
+                for (int editStringIndex = 0; editStringIndex < editString.Length; editStringIndex++)
+                {
+                    var editAreaSmallerThanEditString =
+                        CheckIfEditAreaSmallerThanEditString(editArea, editStringIndex);
+                    if (editAreaSmallerThanEditString)
+                    {
+                        editArea += GetStringToAppendToEditArea(eraseIndex);
+                    }
+
+                    var addToEditedString = CreateCharForEditString(editString[editStringIndex], editArea[editStringIndex]);
+                    var eraserReductionRate = _writingUtensil.FindCharReductionRate(addToEditedString);
+
+                    if (_writingUtensil.PointDurability >= eraserReductionRate)
+                    {
+                        buildEditedString.Append(addToEditedString);
+                        _writingUtensil.ReducePointDurability(eraserReductionRate);
+                    }
+                }
+                if (buildEditedString.Length < editArea.Length)
+                {
+                    for (int i = buildEditedString.Length; i < editArea.Length; i++)
+                    {
+                        buildEditedString.Append(editArea[i]);
+                    }
+                }
+                _stationary.Text[eraseIndex] = buildEditedString.ToString();
             }
         }
 
@@ -181,13 +209,13 @@ namespace Pencil_Durability_Kata
 
         public char CreateCharForEditString(char charInEditString, char charInEditArea)
         {
-            if (charInEditArea == ' ')
+            if (charInEditArea != ' ')
             {
-                return charInEditString;
+                return '@';
             }
             else
             {
-                return '@';
+                return charInEditString;
             }
         }
 
@@ -200,6 +228,20 @@ namespace Pencil_Durability_Kata
             else
             {
                 return false;
+            }
+        }
+
+        public string GetStringToAppendToEditArea(int eraseIndex)
+        {
+            if (eraseIndex < _stationary.Text.Count - 1)
+            {
+                var stringToAppend = " " + _stationary.Text[eraseIndex + 1];
+                _stationary.Text.RemoveAt(eraseIndex + 1);
+                return stringToAppend;
+            }
+            else
+            {
+                return "";
             }
         }
 
@@ -225,7 +267,8 @@ namespace Pencil_Durability_Kata
             {
                 Console.Clear();
                 WritePaperContentsToConsole();
-                Console.Write("(1) Write to paper\n(2) Sharpen pencil\nPlease select a numbered action: ");
+                Console.Write("(1) Write to paper\n(2) Sharpen pencil\n(3) Erase text from paper" +
+                    "\nPlease select a numbered action: ");
                 var selectionToValidate = Console.ReadLine();
                 userSelection = ValidateUserActionRequest(selectionToValidate);
                 if (userSelection != 0)

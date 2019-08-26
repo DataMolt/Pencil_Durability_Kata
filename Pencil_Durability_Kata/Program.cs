@@ -8,16 +8,16 @@ namespace Pencil_Durability_Kata
         static void Main(string[] args)
         {
             var paper = new Paper();
-            paper.Text.Add("abcdefg");
-            paper.Text.Add("b");
-            paper.Text.Add("c");
-            paper.Text.Add("d");
+            //paper.Text.Add("abcdefg");
+            //paper.Text.Add("b");
+            //paper.Text.Add("c");
+            //paper.Text.Add("d");
             var pencilDrawer = new Stack<IWritingUtensil>();
             var pencil = new Pencil();
             var runApplication = new RunApplication(paper, pencil, pencilDrawer);
 
 
-            //runApplication.RunApp();
+            runApplication.RunApp();
         }
     }
 }

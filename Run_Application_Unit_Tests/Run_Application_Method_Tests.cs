@@ -231,5 +231,34 @@ namespace Run_Application_Unit_Tests
 
             Assert.False(result);
         }
+
+        [Fact]
+        public void ReturnStringInNextIndex()
+        {
+            var paper = new Paper();
+            paper.Text.Add("aa");
+            paper.Text.Add("bb");
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.GetStringToAppendToEditArea(0);
+
+            Assert.True(result == " bb");
+        }
+
+        [Fact]
+        public void LastIndexReturnsEmptyString()
+        {
+            var paper = new Paper();
+            paper.Text.Add("aa");
+            var pencil = new Pencil();
+            var pencilDrawer = new Stack<IWritingUtensil>();
+            var sut = new RunApplication(paper, pencil, pencilDrawer);
+
+            var result = sut.GetStringToAppendToEditArea(0);
+
+            Assert.True(result == "");
+        }
     }
 }
