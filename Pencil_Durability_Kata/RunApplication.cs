@@ -173,6 +173,7 @@ namespace Pencil_Durability_Kata
         // edit methods
         public bool AskUserToEditText()
         {
+            Console.Clear();
             Console.WriteLine("Would you like to edit your erased text?");
             Console.Write("Enter 'Y' to edit. Enter any other key to return: ");
             var userInput = Console.ReadLine();
