@@ -4,7 +4,31 @@ This kata was created as an exercise for the Pillar application process. It simu
 
 ## Running The Kata
 
-Steps for running the kata. 
+This kata is a .Net Core app and uses the .Net Core CLI for building, testing, release, and running the app. See Microsoft's documentation for more information:
+
+https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x
+
+To build the solution using the .Net CLI use the following command:
+
+dotnet build
+
+To test the solution using the dotnet cli use the following command:
+
+dotnet test
+
+To publishing the solution use the following command:
+
+dotnet publish -c Release -r win10-x86
+
+Using the above command will publish an executable to the following path:
+
+..\Pencil_Durability_Kata\Pencil_Durability_Kata\bin\Release\netcoreapp2.2\win10-x64
+
+Run the executable in this directory to launch the kata. 
+
+If publishing to Mac or Linux, see the following documentation for finding the appropriate Runtime Identifier:
+
+https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
 
 # Included Functionality
 
