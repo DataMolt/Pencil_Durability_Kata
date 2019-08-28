@@ -8,7 +8,7 @@ This kata is a .Net Core app and uses the .Net Core CLI for building, testing, r
 
 https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x
 
-To build the solution using the .Net CLI use the following command:
+To build the solution using the .Net CLI, navigate to the project root folder and use the following command:
 
 dotnet build
 
